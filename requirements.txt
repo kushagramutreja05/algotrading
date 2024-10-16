@@ -8,5 +8,5 @@ scikit-learn==1.2.2         # Replace with the version you want
 keras==3.2.0               # Keras requires TensorFlow, which will also be installed
 tensorflow==2.17.0  
 xgboost==1.6.2
-transformers 
-torch
+flask==2.3.3
+flask_cors

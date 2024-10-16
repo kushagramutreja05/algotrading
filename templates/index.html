@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Price Prediction</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+
+        input[type="number"], textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+        }
+
+        button {
+            margin-top: 15px;
+            padding: 10px 15px;
+            background-color: #5cb85c;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #4cae4c;
+        }
+
+        #result {
+            margin-top: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Stock Price Prediction</h1>
+        <form id="prediction-form">
+            <label for="open_price">Open Price:</label>
+            <input type="number" id="open_price" step="0.000001" required>
+
+            <label for="high">High Price:</label>
+            <input type="number" id="high" step="0.000001" required>
+
+            <label for="low">Low Price:</label>
+            <input type="number" id="low" step="0.000001" required>
+
+            <label for="close_price">Close Price:</label>
+            <input type="number" id="close_price" step="0.000001" required>
+
+            <label for="volume">Volume:</label>
+            <input type="number" id="volume" step="1" required>
+
+            <label for="today_news">Today's News:</label>
+            <textarea id="today_news" rows="4" required></textarea>
+
+            <label for="tomorrow_news">Tomorrow's News:</label>
+            <textarea id="tomorrow_news" rows="4" required></textarea>
+
+            <button type="submit">Predict Next Day Close Price</button>
+        </form>
+
+        <div id="result">
+            <h2>Predicted Close Price: <span id="predicted_value">N/A</span></h2>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('prediction-form').addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            // Get the input values
+            const openPrice = document.getElementById('open_price').value;
+            const highPrice = document.getElementById('high').value;
+            const lowPrice = document.getElementById('low').value;
+            const closePrice = document.getElementById('close_price').value;
+            const volume = document.getElementById('volume').value;
+            const todayNews = document.getElementById('today_news').value;
+            const tomorrowNews = document.getElementById('tomorrow_news').value;
+
+            // Prepare the data to send
+            const data = {
+                open_price: openPrice,
+                high: highPrice,
+                low: lowPrice,
+                close_price: closePrice,
+                volume: volume,
+                todays_news: todayNews,
+                tomorrows_news: tomorrowNews
+            };
+
+            // Send data to the backend for prediction
+            try {
+                const response = await fetch('http://127.0.0.1:5000/predict', {  // Updated to use /predict route
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.json();
+                document.getElementById('predicted_value').textContent = result.predicted_price;
+            } catch (error) {
+                console.error('Error:', error);
+                
+                document.getElementById('predicted_value').textContent = 'Error predicting price.';
+            }
+        });
+    </script>
+</body>
+</html>
