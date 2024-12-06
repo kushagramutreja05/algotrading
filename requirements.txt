@@ -1,12 +1,13 @@
 pandas_ta==0.1.97b0
-pandas==2.0.3               # Replace with the version you want
-numpy==1.23.5 # Replace with the version you want
-yfinance==0.2.18            # Replace with the version you want
-nltk==3.8.1                 # Replace with the version you want
-matplotlib==3.7.1           # Replace with the version you want
-scikit-learn==1.2.2         # Replace with the version you want
-keras==3.2.0               # Keras requires TensorFlow, which will also be installed
+pandas==2.0.3               
+numpy==1.23.5 
+yfinance==0.2.18            
+nltk==3.8.1                 
+matplotlib==3.7.1           
+scikit-learn==1.2.2         
+keras==3.2.0               
 tensorflow==2.17.0  
 xgboost==1.6.2
 flask==2.3.3
 flask_cors
+statsmodels
